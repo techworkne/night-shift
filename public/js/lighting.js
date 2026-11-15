@@ -60,7 +60,7 @@ const lighting = {
     isInLight: function (obj) {
         const player = gameManager.player;
         if (this.flicker > 0) {
-            return false;          // свет моргнул — Тень не заморожена
+            return false; // свет моргнул = Тень не заморожена
         }
         if(player.battery <= 0){
             return false;

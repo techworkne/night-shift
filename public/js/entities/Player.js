@@ -30,7 +30,7 @@ class Player extends Entity {
             this.frame = 0;
         }
         if (this.battery > 0) {
-            this.battery = Math.max(0, this.battery - 0.05);
+            this.battery = Math.max(0, this.battery - gameManager.levels[gameManager.level].drain);
         }
     }
     onTouchEntity(obj){

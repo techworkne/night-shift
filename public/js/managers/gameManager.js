@@ -6,13 +6,30 @@ const gameManager = {
     tasksDone: 0,
     tasksTotal: 0,
     score: 0,
-    timer: null,         // id игрового цикла (setInterval)
-    over: false,         // игра окончена
+    timer: null, // id игрового цикла (setInterval)
+    over: false,
+    levels: [
+        { map: 'assets/maps/level1.json', visitorSpeed: 1, seeRange: 80, drain: 0.05 },
+        { map: 'assets/maps/level2.json', visitorSpeed: 1, seeRange: 96, drain: 0.08 }
+    ],
+    level: 0,
+    paused: false,
     initPlayer: function (obj) {
         this.player = obj;
     },
     kill: function (obj) {
         this.laterKill.push(obj);
+    },
+    loadLevel: function(n){
+        this.level = n;
+        this.entities = [];
+        this.laterKill = [];
+        this.player = null;
+        this.tasksDone = 0;
+        this.tasksTotal = 0;
+        this.paused = false;
+        mapManager.loadMap(this.levels[n].map);
+        mapManager.parseEntities();
     },
     // Тень коснулась игрока
     playerCaught: function (visitor) {
@@ -33,16 +50,35 @@ const gameManager = {
         document.getElementById('goal').textContent = 'Вас нашли...';
         document.getElementById('hud-msg').textContent = 'Смена не окончена';
     },
+    gameWin: function (){
+        this.over = true;
+        clearInterval(this.timer);
+        document.getElementById('goal').textContent = 'Вы пережили эту ночь';
+    },
     levelComplete: function () {
-        document.getElementById('hud-msg').textContent = 'Смена окончена!';
+        if(this.paused) return;
+        this.paused = true;
+        this.score+=500;
+        if ( this.level < this.levels.length -1 ){
+            document.getElementById('goal').textContent = 'Смена в зале окончена. Вас ждут на складе...';
+            setTimeout(()=>this.loadLevel(this.level+1),2000);
+        }else{
+            this.gameWin();
+        }
     },
     update: function () {
-        if (this.player === null || this.over) {
+        if (this.player === null || this.over || this.paused) {
             return;
         }
 
         if(this.tasksTotal === 0){
             this.tasksTotal = this.entities.filter(e => e.name.startsWith('shelf')).length;
+
+            const cfg = this.levels[this.level];
+            this.entities.forEach(e =>{ if(e.type === "Visitor"){
+                e.speed = cfg.visitorSpeed;
+                e.seeRange = cfg.seeRange;
+            }});
         }
 
         this.player.move_x = 0;
@@ -69,16 +105,16 @@ const gameManager = {
         mapManager.draw(ctx);
         this.draw(ctx);
         lighting.draw(ctx);
-        // глаза Тени светятся поверх темноты
         this.entities.forEach(e => { if (e.drawEyes) e.drawEyes(ctx); });
 
+        document.getElementById('hud-level').textContent = this.level + 1;
         document.getElementById('hud-tasks').textContent = this.tasksDone + '/' + this.tasksTotal;
         document.getElementById('hud-battery').textContent = Math.round(this.player.battery);
         document.getElementById('hud-score').textContent = this.score;
 
         const goal = document.getElementById('goal');
-        if (this.over) {
-            // надпись «Вас нашли...» уже выставлена в gameOver
+        if (this.over || this.paused) {
+            // надпись уже выставлен
         } else if (this.tasksDone < this.tasksTotal) {
             goal.textContent = `Разложите товар по полкам (${this.tasksDone}/${this.tasksTotal})`;
         } else {
@@ -90,7 +126,6 @@ const gameManager = {
         document.getElementById('buff-battery').classList.toggle('active', this.player.battery > 0);
     },
     loadAll: function () {
-        mapManager.loadMap('assets/maps/level1.json');
         spriteManager.loadAtlas('assets/sprites/atlas.json', 'assets/sprites/atlas.png');
         gameManager.factory['Player'] = Player;
         gameManager.factory['Visitor'] = Visitor;
@@ -100,10 +135,10 @@ const gameManager = {
         gameManager.factory['Battery'] = Battery;
         gameManager.factory['Coffee'] = Coffee;
         gameManager.factory['Omamori'] = Omamori;
-        mapManager.parseEntities();
         lighting.init(canvas.width, canvas.height);
         mapManager.draw(ctx);
         eventsManager.setup(canvas);
+        this.loadLevel(0);
     },
     draw: function (ctx) {
         for (let e = 0; e < this.entities.length; e++) {
