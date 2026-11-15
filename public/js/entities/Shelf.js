@@ -1,6 +1,10 @@
 class Shelf extends Entity {
-    constructor() { super(); }
+    constructor() {
+        super();
+        this.filled = false;
+    }
     draw(ctx) {
-        spriteManager.drawSprite(ctx, 'shelf_empty', this.pos_x, this.pos_y);
+        let filled_status = this.filled ? 'shelf_full' : 'shelf_empty';
+        spriteManager.drawSprite(ctx, filled_status, this.pos_x, this.pos_y);
     }
 }

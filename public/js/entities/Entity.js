@@ -4,4 +4,5 @@ class Entity{
         this.size_x = 0; this.size_y = 0;
     }
     update() { }
+    kill() { gameManager.kill(this); }
 }

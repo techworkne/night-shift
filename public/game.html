@@ -7,9 +7,33 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <canvas id="canvas" width="320" height="192">
 
-    </canvas>
+    <div id="layout">
+        <div id="buffs">
+            <h3>Бонусы</h3>
+            <div class="buff" id="buff-battery">
+                <div><b>Батарейка</b><br>+50% заряда фонарика</div>
+            </div>
+            <div class="buff" id="buff-coffee">
+                <div><b>Кофе</b><br>ускорение на 5 секунд</div>
+            </div>
+            <div class="buff" id="buff-omamori">
+                <div><b>Омамори</b><br>спасает от одного касания</div>
+            </div>
+        </div>
+
+        <div id="center">
+            <div id="goal"></div>
+            <canvas id="canvas" width="320" height="192"></canvas>
+        </div>
+
+        <div id="hud">
+            <span>Задачи: <span id="hud-tasks">0/0</span></span>
+            <span>Фонарик: <span id="hud-battery">100</span>%</span>
+            <span>Очки: <span id="hud-score">0</span></span>
+            <span id="hud-msg"></span>
+        </div>
+    </div>
     <script src="./js/managers/mapManager.js"></script>
     <script src="./js/managers/spriteManager.js"></script>
     <script src="./js/managers/eventsManager.js"></script>
@@ -23,6 +47,7 @@
     <script src="./js/entities/Omamori.js"></script>
     <script src="./js/entities/Shelf.js"></script>
     <script src="./js/entities/Exit.js"></script>
+    <script src="./js/lighting.js"></script>
     <script src="./js/managers/gameManager.js"></script>
     <script src="./js/main.js"></script>
 </body>

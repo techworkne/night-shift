@@ -5,8 +5,10 @@ const physicManager = {
         }
         let newX = obj.pos_x + Math.floor(obj.move_x * obj.speed);
         let newY = obj.pos_y + Math.floor(obj.move_y * obj.speed);
-        
-        let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + obj.size_y / 2);
+
+        // стены проверяем по углам объекта, а не только по центру
+        // иначе объект наполовину влезает в стеллаж
+        let ts = this.wallAt(newX, newY, obj.size_x, obj.size_y);
         let e = this.entityAtXY(obj, newX, newY);
         if (e !== null && obj.onTouchEntity) {
             obj.onTouchEntity(e);
@@ -23,15 +25,28 @@ const physicManager = {
         }
         return "move";
     },
+
+    wallAt: function (x, y, w, h) {
+        const m = 2;
+        const points = [
+            [x + m, y + m], [x + w - 1 - m, y + m],
+            [x + m, y + h - 1 - m], [x + w - 1 - m, y + h - 1 - m]
+        ];
+        for (const [px, py] of points) {
+            const t = mapManager.getTilesetIdx(px, py);
+            if (t !== 0) return t;
+        }
+        return 0;
+    },
     entityAtXY: function (obj, x, y) {
+        const pad = 3;
         for (let i = 0; i < gameManager.entities.length; i++) {
             let e = gameManager.entities[i];
             if (e !== obj) {
-                if (x + obj.size_x < e.pos_x ||
-                    y + obj.size_y < e.pos_y ||
-                    x > e.pos_x + e.size_x ||
-                    y > e.pos_y + e.size_y
-                ) {
+                if (x + obj.size_x <= e.pos_x + pad ||
+                    y + obj.size_y <= e.pos_y + pad ||
+                    x >= e.pos_x + e.size_x - pad ||
+                    y >= e.pos_y + e.size_y - pad) {
                     continue;
                 }
                 return e;

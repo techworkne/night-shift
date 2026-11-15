@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="14">
- <tileset firstgid="1" name="nightshift_tiles" tilewidth="16" tileheight="16" tilecount="64" columns="8">
-  <image source="nightshift_tiles.png" width="128" height="128"/>
+ <editorsettings>
+  <export target="level1.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="nightshift_tiles" tilewidth="16" tileheight="16" tilecount="72" columns="8">
+  <image source="nightshift_tiles.png" width="128" height="144"/>
  </tileset>
  <layer id="1" name="floor" width="30" height="20">
   <data encoding="csv">
@@ -31,7 +34,7 @@
   <data encoding="csv">
 9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,
 12,18,18,18,23,18,18,18,18,24,18,18,18,18,18,21,18,18,18,18,23,18,18,18,18,24,18,18,18,12,
-12,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,0,0,41,42,43,0,0,0,0,0,0,12,
+12,58,0,0,0,0,0,0,0,0,0,0,0,0,0,65,0,0,0,0,41,42,43,0,0,0,0,0,0,12,
 12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54,12,
 12,0,0,28,25,26,27,28,25,26,27,28,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,12,
 12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54,12,
@@ -52,18 +55,18 @@
 </data>
  </layer>
  <objectgroup id="3" name="objects">
-  <object id="1" name="player" type="Player" x="369.283" y="271.519" width="16" height="16"/>
-  <object id="2" type="Exit" x="368.5" y="246.056" width="16" height="16"/>
-  <object id="3" type="Visitor" x="32" y="32" width="16" height="32"/>
-  <object id="4" type="Box" x="32" y="272" width="16" height="16"/>
-  <object id="5" type="Box" x="224" y="48" width="16" height="16"/>
-  <object id="6" type="Box" x="432" y="192" width="16" height="16"/>
-  <object id="7" type="Shelf" x="80" y="80" width="16" height="16"/>
-  <object id="8" type="Shelf" x="144" y="176" width="16" height="16"/>
-  <object id="9" type="Shelf" x="336" y="112" width="16" height="16"/>
-  <object id="10" type="Battery" x="208" y="128" width="16" height="16"/>
-  <object id="11" type="Battery" x="416" y="64" width="16" height="16"/>
-  <object id="12" type="Coffee" x="256" y="224" width="16" height="16"/>
-  <object id="13" type="Omamori" x="16" y="160" width="16" height="16"/>
+  <object id="1" name="player" type="Player" x="368" y="272" width="16" height="16"/>
+  <object id="2" name="exit" type="Exit" x="368" y="240" width="16" height="16"/>
+  <object id="3" name="visitor1" type="Visitor" x="271.908" y="31.3617" width="16" height="32"/>
+  <object id="4" name="box1" type="Box" x="32" y="272" width="16" height="16"/>
+  <object id="5" name="box2" type="Box" x="224" y="48" width="16" height="16"/>
+  <object id="6" name="box3" type="Box" x="432" y="192" width="16" height="16"/>
+  <object id="7" name="shelf1" type="Shelf" x="80" y="80" width="16" height="16"/>
+  <object id="8" name="shelf2" type="Shelf" x="144" y="176" width="16" height="16"/>
+  <object id="9" name="shelf3" type="Shelf" x="336" y="112" width="16" height="16"/>
+  <object id="10" name="battery1" type="Battery" x="208" y="128" width="16" height="16"/>
+  <object id="11" name="battery2" type="Battery" x="416" y="64" width="16" height="16"/>
+  <object id="12" name="coffee1" type="Coffee" x="256" y="224" width="16" height="16"/>
+  <object id="13" name="omamori1" type="Omamori" x="16" y="160" width="16" height="16"/>
  </objectgroup>
 </map>

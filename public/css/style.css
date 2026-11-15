@@ -1,4 +1,4 @@
-body{ 
+body{
     margin: 0;
     background: #000;
     display: flex;
@@ -12,3 +12,45 @@ body{
     height: 576px;
     image-rendering: pixelated;
 }
+
+#hud {
+    display: flex;
+    flex-direction: column;
+    color: #ccc;
+    font-family: monospace;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+#layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+#center  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#goal{
+    color: #e8d8a0;
+    font-family: monospace;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+#buffs{
+    width: 220px;
+    color: #bbb;
+    font-family: monospace;
+    font-size: 14px;
+}
+.buff{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 6px;
+    border: 1px solid #333;
+    opacity: 0.6;
+}
+.buff.active { opacity: 1; border-color: #7cfc7c; }
