@@ -40,6 +40,9 @@ class Visitor extends Entity {
     update() {
         const player = gameManager.player;
         this.frame++;
+        if (this.frame % 40 === 0) {
+            soundManager.playWorldSound('assets/sounds/heartbeat.mp3', this.pos_x, this.pos_y);
+        }
 
         // на первом кадре: столкновения считаем только по «ногам» (нижняя клетка 16×16),
         // голова рисуется выше — иначе Тень задевает игрока сквозь стеллаж и не пролезает в проходы

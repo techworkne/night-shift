@@ -45,12 +45,15 @@ const gameManager = {
         }
     },
     gameOver: function () {
+        soundManager.stopAll();
+        soundManager.play('assets/sounds/jumpscare.mp3');
         this.over = true;
         clearInterval(this.timer);
         document.getElementById('goal').textContent = 'Вас нашли...';
         document.getElementById('hud-msg').textContent = 'Смена не окончена';
     },
     gameWin: function (){
+        soundManager.stopAll();
         this.over = true;
         clearInterval(this.timer);
         document.getElementById('goal').textContent = 'Вы пережили эту ночь';
@@ -75,7 +78,7 @@ const gameManager = {
             this.tasksTotal = this.entities.filter(e => e.name.startsWith('shelf')).length;
 
             const cfg = this.levels[this.level];
-            this.entities.forEach(e =>{ if(e.type === "Visitor"){
+            this.entities.forEach(e =>{ if(e.name.startsWith('visitor')){
                 e.speed = cfg.visitorSpeed;
                 e.seeRange = cfg.seeRange;
             }});
@@ -138,6 +141,16 @@ const gameManager = {
         lighting.init(canvas.width, canvas.height);
         mapManager.draw(ctx);
         eventsManager.setup(canvas);
+        soundManager.init();
+        soundManager.loadArray([
+            'assets/sounds/ambient.mp3',
+            'assets/sounds/step.mp3',
+            'assets/sounds/pickup.mp3',
+            'assets/sounds/bonus.mp3',
+            'assets/sounds/heartbeat.mp3',
+            'assets/sounds/jumpscare.mp3'
+        ]);
+        soundManager.play('assets/sounds/ambient.mp3', { looping: true, volume: 0.4 });
         this.loadLevel(0);
     },
     draw: function (ctx) {

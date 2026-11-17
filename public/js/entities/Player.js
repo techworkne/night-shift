@@ -26,6 +26,7 @@ class Player extends Entity {
         if (this.move_x === 1) this.dir = 'right';
         if (this.move_x !== 0 || this.move_y !== 0) {
             this.frame++;
+            if (this.frame % 8 === 1) soundManager.play('assets/sounds/step.mp3', { volume: 0.3 });
         } else {
             this.frame = 0;
         }
