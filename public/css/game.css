@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --bg: #050407;
+    --text: #a9a3ad;
+    --accent: #e8d8a0;
+    --blood: #b3121b;
+    --green: #5fbf6e;
+    --pixel: 'Press Start 2P', monospace;
+    --mono: 'Courier New', monospace;
+}
+
+body{
+    margin: 0;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#canvas{
+    width: 960px;
+    height: 576px;
+    image-rendering: pixelated;
+}
+
+#hud {
+    display: flex;
+    flex-direction: column;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+#layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+#center  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#goal{
+    color: var(--accent);
+    font-family:var(--pixel);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+#buffs{
+    width: 220px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+}
+.buff{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 6px;
+    border: 1px solid #333;
+    opacity: 0.6;
+}
+.buff.active {
+    opacity: 1;
+    border-color: var(--green);
+    box-shadow: 0 0 10px rgba(95, 191, 110, 0.5);
+}
+
+
+#scare {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+#scare.show {
+    display: flex;
+    animation: scareshake 0.08s infinite;
+}
+#scare-img {
+    height: 95vh;
+    image-rendering: pixelated;
+}
+@keyframes scareshake {
+    0%   { transform: translate(0, 0) scale(1.02); }
+    50%  { transform: translate(-6px, 4px) scale(1.05); }
+    100% { transform: translate(5px, -3px) scale(1.03); }
+}

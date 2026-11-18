@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ночная смена -- рекорды</title>
+    <link rel="stylesheet" href="./css/records.css">
+</head>
+<body>
+    <h1>Таблица рекордов</h1>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Место</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Очки</th>
+                <th scope="col">Уровень</th>
+                <th scope="col">Результат</th>
+                <th scope="col">Дата</th>
+            </tr>
+        </thead>
+        <tbody id="table"></tbody>
+    </table>
+    <div>
+        <button id="replay_btn">Играть снова</button>
+        <button id="change_name_btn">Сменить имя</button>
+    </div>
+
+    <script src="./js/records.js"></script>
+    <script>
+        const tbody = document.getElementById('table');
+        const list = records.load();
+        const last = JSON.parse(localStorage.getItem('nightshift_last') || 'null');
+
+        if (list.length === 0) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.textContent = 'Пока никто не пережил эту ночь';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        }
+
+        list.forEach(function (r, i) {
+            const tr = document.createElement('tr');
+            const cells = [i + 1, r.name, r.score, r.level, r.result, r.date];
+            cells.forEach(function (value) {
+                const td = document.createElement('td');
+                td.textContent = value;
+                tr.appendChild(td);
+            });
+
+            tr.children[4].className = r.result === 'выжил' ? 'survived' : 'caught';
+
+            if (last && r.name === last.name && r.score === last.score && r.date === last.date) {
+                tr.className = 'last';
+            }
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('replay_btn').addEventListener('click', function () {
+            location.href = 'game.html';
+        });
+        document.getElementById('change_name_btn').addEventListener('click', function () {
+            location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

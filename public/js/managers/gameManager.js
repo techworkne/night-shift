@@ -46,17 +46,27 @@ const gameManager = {
     },
     gameOver: function () {
         soundManager.stopAll();
-        soundManager.play('assets/sounds/jumpscare.mp3');
+        soundManager.play('assets/sounds/jumpscare.mp3',{volume: 5} );
+        const scare = document.getElementById('scare');
+        const img = document.getElementById('scare-img');
+        scare.classList.add('show');
+        let f = 0;
+        setInterval(() => {
+            f = 1 - f;
+            img.src = `./assets/sprites/scare_${f}.png`;
+        }, 90);
         this.over = true;
         clearInterval(this.timer);
         document.getElementById('goal').textContent = 'Вас нашли...';
         document.getElementById('hud-msg').textContent = 'Смена не окончена';
+        this.finishGame('пойман');
     },
     gameWin: function (){
         soundManager.stopAll();
         this.over = true;
         clearInterval(this.timer);
         document.getElementById('goal').textContent = 'Вы пережили эту ночь';
+        this.finishGame('выжил');
     },
     levelComplete: function () {
         if(this.paused) return;
@@ -68,6 +78,16 @@ const gameManager = {
         }else{
             this.gameWin();
         }
+    },
+    finishGame: function (result) {
+        records.add({
+            name: playerName,
+            score: this.score,
+            level: this.level + 1,
+            result: result,
+            date: new Date().toLocaleString('ru-RU')
+        });
+        setTimeout(() => { location.href = 'records.html'; }, 3000);
     },
     update: function () {
         if (this.player === null || this.over || this.paused) {
@@ -139,7 +159,6 @@ const gameManager = {
         gameManager.factory['Coffee'] = Coffee;
         gameManager.factory['Omamori'] = Omamori;
         lighting.init(canvas.width, canvas.height);
-        mapManager.draw(ctx);
         eventsManager.setup(canvas);
         soundManager.init();
         soundManager.loadArray([

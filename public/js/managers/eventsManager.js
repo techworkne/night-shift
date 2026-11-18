@@ -6,7 +6,6 @@ const eventsManager = {
         this.bind[39] = 'right';
         this.bind[38] = 'up';
         this.bind[40] = 'down';
-        this.bind[69] = 'use';
         document.addEventListener('keydown', this.onKeyDown);
         document.addEventListener('keyup', this.onKeyUp);
     },

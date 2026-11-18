@@ -64,8 +64,8 @@
  <objectgroup id="3" name="objects">
   <object id="1" name="player" type="Player" x="32" y="352" width="16" height="16"/>
   <object id="2" name="exit" type="Exit" x="592" y="32" width="16" height="16"/>
-  <object id="3" name="visitor1" type="Visitor" x="320" y="112" width="16" height="32"/>
-  <object id="4" name="visitor2" type="Visitor" x="544" y="192" width="16" height="32"/>
+  <object id="3" name="visitor1" type="Visitor" x="159.599" y="95.6035" width="16" height="32"/>
+  <object id="4" name="visitor2" type="Visitor" x="574.654" y="157.068" width="16" height="32"/>
   <object id="5" name="box1" type="Box" x="192" y="32" width="16" height="16"/>
   <object id="6" name="box2" type="Box" x="48" y="224" width="16" height="16"/>
   <object id="7" name="box3" type="Box" x="400" y="64" width="16" height="16"/>

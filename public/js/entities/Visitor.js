@@ -7,7 +7,7 @@ class Visitor extends Entity {
         this.frame = 0;  // счётчик кадров анимации
         this.timer = 0;  // сколько кадров идёт в текущем направлении (для wander)
         this.seeRange = 80;  // с какого расстояния замечает игрока (5 клеток)
-        this.spawn_x = null;  // точка появления (сюда возвращается после омамори)
+        this.spawn_x = null;  // точка появления (сюда после омамори)
         this.spawn_y = null;
         this.detour = 0;  // сколько кадров ещё идти в обход препятствия
         this.side = 1;  // в какую сторону обходить (+1 или -1)
@@ -40,12 +40,14 @@ class Visitor extends Entity {
     update() {
         const player = gameManager.player;
         this.frame++;
-        if (this.frame % 40 === 0) {
+        if (this.frame % 30 === 0) {
+            soundManager.playWorldSound('assets/sounds/heartbeat.mp3', this.pos_x, this.pos_y);
+        }
+        const beat = this.fsm.current === 'chase' ? 20 : 60;
+        if (this.frame % beat === 0) {
             soundManager.playWorldSound('assets/sounds/heartbeat.mp3', this.pos_x, this.pos_y);
         }
 
-        // на первом кадре: столкновения считаем только по «ногам» (нижняя клетка 16×16),
-        // голова рисуется выше — иначе Тень задевает игрока сквозь стеллаж и не пролезает в проходы
         if (this.spawn_x === null) {
             this.pos_y += this.size_y - 16;
             this.size_y = 16;

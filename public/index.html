@@ -1,11 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ночная смена</title>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-    
+
+    <div class="info">
+        <h1>НОЧНАЯ<br>СМЕНА</h1>
+
+        <p class="story">
+            <b>Как меня могли уволить...</b> Я думал, что скоро стану миддлом.
+            А меня заменил ИИ... Теперь остаётся брать ночные смены в этом странном магазине,
+            чтобы оплачивать жильё.
+        </p>
+
+        <ul class="rules">
+            <li><span class="tag control">Управление.</span> стрелки -- движение. Фонарик светит туда, куда вы смотрите. M -- звук.</li>
+            <li><span class="tag goal">Цель.</span> Разложите коробки по полкам, затем подойдите к кассе.</li>
+            <li><span class="tag lose">Опасность.</span> Если посетитель коснётся вас -- смена окончена. Свет фонаря его останавливает.</li>
+            <li><span class="tag bonus">Бонусы.</span> Батарейки, кофе и омамори разбросаны по залу. Используйте их с умом.</li>
+        </ul>
+
+        <label for="name">ИМЯ СОТРУДНИКА:</label>
+        <div class="start-row">
+            <input id="name" maxlength="16" autocomplete="off">
+            <button id="start_button">НАЧАТЬ СМЕНУ</button>
+        </div>
+        <div id="hint"></div>
+        <a class="records-link" href="records.html">ТАБЛИЦА РЕКОРДОВ</a>
+    </div>
+
+    <script>
+        const nameInput = document.getElementById("name");
+        const startBtn = document.getElementById("start_button");
+        nameInput.value = localStorage.getItem('nightshift_player') || '';
+        startBtn.addEventListener('click', function(){
+            const name = nameInput.value.trim();
+            if (name === ''){
+                document.getElementById('hint').textContent = 'Введите имя, чтобы начать смену';
+                return;
+            }
+            localStorage.setItem('nightshift_player', name);
+            location.href = 'game.html';
+        })
+        nameInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') startBtn.click();
+        });
+    </script>
+
 </body>
+
 </html>

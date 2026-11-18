@@ -7,6 +7,7 @@ class Player extends Entity {
         this.battery = 100;
         this.shield = false;
         this.carrying = false;
+        this.coffee = 0;
         this.dir = 'down';
         this.frame = 0;
     }
@@ -19,6 +20,12 @@ class Player extends Entity {
         }
     }
     update() {
+        if (this.coffee > 0) {
+            this.coffee--;
+            this.speed = 3;
+        } else {
+            this.speed = 2;
+        }
         physicManager.update(this);
         if (this.move_y === -1) this.dir = 'up';
         if (this.move_y === 1) this.dir = 'down';
@@ -26,7 +33,7 @@ class Player extends Entity {
         if (this.move_x === 1) this.dir = 'right';
         if (this.move_x !== 0 || this.move_y !== 0) {
             this.frame++;
-            if (this.frame % 8 === 1) soundManager.play('assets/sounds/step.mp3', { volume: 0.3 });
+            if (this.frame % 8 === 1) soundManager.play('assets/sounds/step.mp3', { volume: 0.2 });
         } else {
             this.frame = 0;
         }
@@ -35,43 +42,46 @@ class Player extends Entity {
         }
     }
     onTouchEntity(obj){
-        if(obj){
-            if(obj.name.startsWith('box') && !this.carrying){
-                this.carrying = true;
-                gameManager.kill(obj);
+        if(obj.name.startsWith('box') && !this.carrying){
+            this.carrying = true;
+            soundManager.play('assets/sounds/pickup.mp3');
+            obj.kill();
+        }
+        if(obj.name.startsWith('shelf') && this.carrying && !obj.filled){
+            this.carrying = false;
+            obj.filled = true;
+            gameManager.tasksDone++;
+            soundManager.play('assets/sounds/pickup.mp3');
+            gameManager.score += 100;
+        }
+        if(obj.name.startsWith('battery')) {
+            this.battery += 50;
+            if (this.battery > 100){
+                this.battery = 100;
             }
-            if(obj.name.startsWith('shelf') && this.carrying && !obj.filled){
-                this.carrying = false;
-                obj.filled = true;
-                gameManager.tasksDone++;
-                gameManager.score += 100;
+            soundManager.play('assets/sounds/bonus.mp3');
+            obj.kill();
+        }
+        if(obj.name.startsWith('coffee')) {
+            soundManager.play('assets/sounds/bonus.mp3');
+            this.coffee += 125;
+            obj.kill();
+        }
+        if(obj.name.startsWith('omamori')) {
+            if (!this.shield){
+                soundManager.play('assets/sounds/bonus.mp3');
+                this.shield = true;
+                obj.kill();
             }
-            if(obj.name.startsWith('battery')) {
-                this.battery += 50;
-                if (this.battery > 100){
-                    this.battery = 100;
-                }
-                gameManager.kill(obj)
-            }
-            if(obj.name.startsWith('coffee')) {
-                this.speed = 3;
-                gameManager.kill(obj)
-                setTimeout(() => {this.speed = 2;}, 5000)
-            }
-            if(obj.name.startsWith('omamori')) {
-                if (!this.shield){
-                    this.shield = true;
-                    gameManager.kill(obj)
-                }
-            }
-            if(obj.name.startsWith('visitor')) {
-                gameManager.playerCaught(obj);
-            }
-            if(obj.name.startsWith('exit')) {
-                if (gameManager.tasksTotal === gameManager.tasksDone){
-                    gameManager.levelComplete();
-                }
+        }
+        if(obj.name.startsWith('visitor')) {
+            gameManager.playerCaught(obj);
+        }
+        if(obj.name.startsWith('exit')) {
+            if (gameManager.tasksTotal === gameManager.tasksDone){
+                gameManager.levelComplete();
             }
         }
     }
+
 }
