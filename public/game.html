@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ночная смена</title>
     <link rel="stylesheet" href="./css/game.css">
+    <link rel="stylesheet" href="./css/mobile.css">
 </head>
 <body>
 
@@ -35,6 +36,18 @@
             <span id="hud-msg"></span>
         </div>
     </div>
+    <div id="touch">
+        <div class="dpad">
+            <button data-action="up">▲</button>
+            <button data-action="left">◀</button>
+            <button data-action="right">▶</button>
+            <button data-action="down">▼</button>
+        </div>
+        <div class="touch-side">
+            <button id="touch-mute">ЗВУК</button>
+        </div>
+    </div>
+    <div id="rotate">Поверните телефон горизонтально</div>
     <div id="scare"><img id="scare-img" src="./assets/sprites/scare_0.png" alt=""></div>
     <script src="./js/records.js"></script>
     <script src="./js/managers/mapManager.js"></script>
@@ -54,5 +67,6 @@
     <script src="./js/lighting.js"></script>
     <script src="./js/managers/gameManager.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/touch.js"></script>
 </body>
 </html>

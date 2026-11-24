@@ -1,0 +1,130 @@
+
+#touch, #rotate {
+    display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    body {
+        height: 100dvh;
+        overflow: hidden;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    #layout {
+        display: block;
+    }
+
+    #center {
+        height: 100dvh;
+        justify-content: center;
+    }
+
+    #goal {
+        font-size: 9px;
+        margin: 4px 0 6px;
+        max-width: calc(100vw - 300px);
+        text-align: center;
+        line-height: 1.4;
+    }
+
+
+    #canvas {
+        width: min(calc(100vw - 300px), calc((100dvh - 40px) * 5 / 3));
+        height: auto;
+    }
+
+    #hud {
+        position: fixed;
+        top: 8px;
+        left: 10px;
+        margin: 0;
+        font-size: 11px;
+    }
+
+    #buffs {
+        position: fixed;
+        top: 8px;
+        right: 10px;
+        width: 120px;
+    }
+    #buffs h3 {
+        display: none;
+    }
+    .buff {
+        font-size: 0;
+        padding: 3px 6px;
+        margin-bottom: 4px;
+    }
+    .buff b {
+        font-size: 11px;
+    }
+
+    #touch {
+        display: block;
+    }
+    .dpad {
+        position: fixed;
+        left: 14px;
+        bottom: 14px;
+        display: grid;
+        grid-template-columns: repeat(3, 48px);
+        grid-template-rows: repeat(3, 48px);
+        gap: 4px;
+    }
+    .dpad [data-action="up"]    { grid-column: 2; grid-row: 1; }
+    .dpad [data-action="left"]  { grid-column: 1; grid-row: 2; }
+    .dpad [data-action="right"] { grid-column: 3; grid-row: 2; }
+    .dpad [data-action="down"]  { grid-column: 2; grid-row: 3; }
+
+    .touch-side {
+        position: fixed;
+        right: 14px;
+        bottom: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #touch button {
+        width: 48px;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid #444;
+        border-radius: 8px;
+        color: var(--text);
+        font-family: var(--pixel);
+        font-size: 14px;
+        touch-action: none;
+    }
+    .touch-side button {
+        width: 64px !important;
+        font-size: 9px !important;
+    }
+    #touch button.pressed {
+        background: rgba(232, 216, 160, 0.25);
+        border-color: var(--accent);
+    }
+    #touch button.off {
+        opacity: 0.4;
+    }
+
+    @media (orientation: portrait) {
+        #rotate {
+            display: flex;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: var(--bg);
+            color: var(--accent);
+            font-family: var(--pixel);
+            font-size: 12px;
+            line-height: 1.8;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+    }
+}

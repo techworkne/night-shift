@@ -90,3 +90,14 @@ button:hover {
     0%, 100% { box-shadow: 0 0 6px rgba(179, 18, 27, 0.4); }
     50%      { box-shadow: 0 0 22px rgba(179, 18, 27, 0.85), 0 0 4px rgba(179, 18, 27, 0.9) inset; }
 }
+
+
+@media (max-width: 600px) {
+    th:nth-child(6), td:nth-child(6) {
+        display: none;
+    }
+    th, td {
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+}

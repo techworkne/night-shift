@@ -13,7 +13,6 @@ const eventsManager = {
         if (soundManager.context && soundManager.context.state === 'suspended') {
             soundManager.context.resume();
         }
-        // M включить/выключить звук
         if (event.keyCode === 77) {
             soundManager.toggleMute();
         }
